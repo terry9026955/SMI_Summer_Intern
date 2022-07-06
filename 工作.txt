@@ -1,0 +1,54 @@
+1.先把project專案裡面的test_plan_ui.py看懂
+
+2.先搞出能讀出list disk資訊的程式
+
+3.再來是關於讀出disk0, 1之後，要確認讀出來的disk跟dut_id、p**_id
+
+
+
+
+pyinstaller 可以包裝成EXE檔案的套件
+
+pipenv shell進去之後可以新增或刪除虛擬環境，環境架起來之後可以把code裡面要裝的package安裝起來，讓他成功run
+
+Anydesk可以遠端到其他電腦
+
+
+
+pipenv使用步驟:
+
+1. pip install pipenv
+2. cd /d D:\Tinghao.Chen\Desktop\project_intel_smoke_test
+3. pipenv install --python=3.7 (create enviroment)
+4. pipenv shell (To open virtual env)
+5. pipenv install pyqt5 (download this package on this vm env)
+
+
+7/5:
+
+報告聽到的:
+One Touch 裡面的功能
+我還要架東西
+
+看Roadmap PPT
+看學長給的code
+看PyQt5教學
+看開卡流程、一些測試驗證怎麼弄(Driving、RDT、睡眠.....)
+
+
+
+7/6:
+
+熟悉基本語法(try/except、class)  V
+
+熟悉套件(先手刻PyQt5簡易程式、再細看學長的code內容怎麼使用那些語法弄出功能)
+收到實習工作進度規畫表
+下午裝機
+
+主要是今天要找出python可以讀disk info的方法
+目前的想法是用psutil這個套件來讀看看
+目前讀出C、D槽的內部資訊而已，disk number(id)還是找不太到關鍵字
+
+psutil好像沒有相關的功能可以呼叫出來看
+有用os.system來叫，但是diskpart會另外跳出一個新的視窗要輸入'list disk'，這個目前有點難解。
+

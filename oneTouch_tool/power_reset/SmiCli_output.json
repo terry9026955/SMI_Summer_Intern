@@ -1,0 +1,67 @@
+{
+  "drive_info_list": [
+    {
+      "base_addr": 0,
+      "bus": 255,
+      "dev": 255,
+      "did": 0,
+      "disk_info_list": [
+        {
+          "capacity": 500107862016,
+          "id": 0,
+          "part_info_list": [
+            {
+              "capacity": 499313012736,
+              "drive_letter": "C",
+              "free_space": 226149814272
+            }
+          ],
+          "sector_count": 976773168,
+          "sector_size": 512
+        }
+      ],
+      "disk_type": 256,
+      "fun": 255,
+      "fw_rev": "M3CR023",
+      "hwid": "PCI\\VEN_8086&DEV_A352",
+      "link_speed": 0,
+      "link_str": "",
+      "link_width": 0,
+      "model": "CT500MX500SSD1N",
+      "mps": 0,
+      "mps_str": "",
+      "protocol_type": 16,
+      "pxcap_offset": 0,
+      "sn": "",
+      "vid": 0
+    },
+    {
+      "base_addr": 2703228928,
+      "bus": 1,
+      "dev": 0,
+      "did": 7513,
+      "disk_info_list": [
+        {
+          "capacity": 240057409536,
+          "id": 1,
+          "sector_count": 468862128,
+          "sector_size": 512
+        }
+      ],
+      "disk_type": 257,
+      "fun": 0,
+      "fw_rev": "51000C30",
+      "hwid": "PCI\\VEN_1C5C&DEV_1D59",
+      "link_speed": 3,
+      "link_str": "Gen3x4",
+      "link_width": 4,
+      "model": "SM2269XT ISP - 256GB\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000\u0000",
+      "mps": 2,
+      "mps_str": "512",
+      "protocol_type": 33,
+      "pxcap_offset": 112,
+      "sn": "AA000000000000000049",
+      "vid": 7260
+    }
+  ]
+}

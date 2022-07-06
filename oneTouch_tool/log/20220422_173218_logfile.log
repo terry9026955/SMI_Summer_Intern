@@ -1,0 +1,9 @@
+ERROR 2022-04-22 17:32:18,007 - Error Message from run_memory
+Traceback (most recent call last):
+  File "d:\DEPT\intel_smoke_test_ui\test_plan_ui.py", line 320, in run_memory
+    config.set('Runonce_trigger',"tigger", 0)
+  File "c:\users\jerry.ku\appdata\local\programs\python\python37\lib\configparser.py", line 1197, in set
+    self._validate_value_types(option=option, value=value)
+  File "c:\users\jerry.ku\appdata\local\programs\python\python37\lib\configparser.py", line 1182, in _validate_value_types
+    raise TypeError("option values must be strings")
+TypeError: option values must be strings

@@ -1,0 +1,146 @@
+;
+; Installation inf for the NVME Miniport
+;
+
+[Version]
+Signature="$Windows NT$"
+Provider=%ProviderName%
+ClassGUID={4D36E97B-E325-11CE-BFC1-08002BE10318}
+Class=SCSIAdapter
+DriverVer=05/10/2021,1.4.54.0
+CatalogFile = nvme.cat
+
+[PackageInfo]
+Name=NVMe
+
+[Manufacturer]
+%ProviderName% = COMM, NTamd64, NTx86
+
+[SourceDisksNames]
+1 = %DiskId1%,,,""
+
+[DestinationDirs]
+DefaultDestDir   = 12
+
+[nvme_Service_Inst]
+ServiceType    = %SERVICE_KERNEL_DRIVER%
+StartType      = %SERVICE_BOOT_START%
+ErrorControl   = %SERVICE_ERROR_NORMAL%
+ServiceBinary  = %12%\nvme.sys
+LoadOrderGroup = SCSI miniport
+AddReg         = pnpsafe_pci_addreg
+AddReg         = Parameters
+
+[nvme_EventLog_Inst]
+AddReg = nvme_EventLog_AddReg
+
+[nvme_EventLog_AddReg]
+HKR,,EventMessageFile,%REG_EXPAND_SZ%,"%%SystemRoot%%\System32\IoLogMsg.dll"
+HKR,,TypesSupported,%REG_DWORD%,7
+
+[pnpsafe_pci_addreg]
+HKR, "Parameters\PnpInterface", "5", %REG_DWORD%, 0x00000001
+HKR, "Parameters", "BusType", %REG_DWORD%, 0x00000011
+
+[msi_addreg]
+HKR, Interrupt Management, 0x00000010
+HKR, Interrupt Management\MessageSignaledInterruptProperties, 0x00000010
+HKR, Interrupt Management\MessageSignaledInterruptProperties, MSISupported,       %REG_DWORD%,   1
+HKR, Interrupt Management\MessageSignaledInterruptProperties, MessageNumberLimit, %REG_DWORD%,   32
+HKR, Interrupt Management\Affinity Policy, 0x00000010
+HKR, Interrupt Management\Affinity Policy, DevicePolicy, %REG_DWORD%, 5 ;IrqPolicySpreadMessagesAcrossAllProcessors
+
+[Parameters]
+HKR, Parameters\Device, PowerState3Enable,          %REG_DWORD%, 0x00000001 ; power state 3 supported
+HKR, Parameters\Device, PowerState3Timer,           %REG_DWORD%, 0x00000002 ; power state 3 timer interval(1~10)(50ms unit)
+HKR, Parameters\Device, PowerState4Enable,          %REG_DWORD%, 0x00000000 ; power state 4 supported
+HKR, Parameters\Device, PowerState4Timer,           %REG_DWORD%, 0x0000000A ; power state 4 timer interval(1~600)(50ms unit)
+HKR, Parameters\Device, Namespaces,                 %REG_DWORD%, 0x00000010 ; max number of namespaces supported
+HKR, Parameters\Device, MaxTXSize,                  %REG_DWORD%, 0x00020000 ; max trasnfer size
+HKR, Parameters\Device, AdQEntries,                 %REG_DWORD%, 0x00000080 ; admin queue size (num of entries)
+HKR, Parameters\Device, IoQEntries,                 %REG_DWORD%, 0x00000400 ; IO queue size (num of entries)
+HKR, Parameters\Device, IntCoalescingTime,          %REG_DWORD%, 0x00000000 ; time threshold for INT coalescing
+HKR, Parameters\Device, IntCoalescingEntries,       %REG_DWORD%, 0x00000000 ; # of entries threadhold for INT coalescing
+HKR, Parameters\Device, HMBEnable,                  %REG_DWORD%, 0x00000001 ; Host memory buffer supported
+HKR, Parameters\Device, VSTimeoutEnable,            %REG_DWORD%, 0x00000001 ; Vendor command timeout mechanism supported
+HKR, Parameters\Device, VSTimeoutValue,	            %REG_DWORD%, 0x0000000A ; Vendor command timeout value deault 10sec 
+HKR, Parameters\Device, AutoDetectDeviceDisable,    %REG_DWORD%, 0x00000000 ; disable auto detect device function
+HKR, Parameters\Device, BootPartitionEnable,	    %REG_DWORD%, 0x00000000 ; Boot Partition supported
+HKR, Parameters\Device, CSTSRDYTimeoutValue,	    %REG_DWORD%, 0x0000002D ; CSTS.RDYTimeoutValue Setting
+HKR, Parameters\Device, SPORFreeMemoryEnable,	    %REG_DWORD%, 0x00000000 ; SPOR Free Memory Enable Setting
+HKR, Parameters\Device, CMBSupportEnable,           %REG_DWORD%, 0x00000000 ; Controller Memory Buffer supported
+HKR, Parameters\Device, SmiTest,                    %REG_DWORD%, 0x00000000 ; Smi test enable supported
+HKR, Parameters\Device, InitialLunQueueDepth,       %REG_DWORD%, 0x000000FE ; Initial Lun Queue Depth
+HKR, Parameters\Device, StopDriverInstall,          %REG_DWORD%, 0x00000000 ; Driver Install Disable
+;HKR, Parameters\Device, HardCodeIdData,            %REG_DWORD%, 0x00000001 ; for chatham2, whether idetnify data is hardcoded
+;HKR, Parameters\Device, NsSize,                    %REG_DWORD%, 0x3FFFDF0 ; for chatham2, ability to specufy a lower namespace size
+
+;******************************************************************************
+;*
+;* 32-BIT X86 ARCHITECTURE
+;*
+;* This section specifies the 32-bit architecture specific INF file entries
+;* required to install a driver as a 32-bit compatible driver.
+;*
+;******************************************************************************
+[SourceDisksFiles.x86]
+nvme.sys = 1,,,
+
+[COMM.NTx86]
+%COMMNvme.DeviceDesc% = nvme_inst, PCI\CC_010802
+%COMMNvme.DeviceDesc% = nvme_inst, PCI\CC_018000
+%COMMNvme.DeviceDesc% = nvme_inst, PCI\CC_010400
+
+
+[nvme_inst.ntx86]
+CopyFiles=@nvme.sys
+
+[nvme_inst.ntx86.HW]
+AddReg = msi_addreg
+
+[nvme_inst.ntx86.Services]
+AddService = nvme, 0x00000002 , nvme_Service_Inst, nvme_EventLog_Inst
+
+;******************************************************************************
+;*
+;* 64-BIT X86 ARCHITECTURE
+;*
+;* This section specifies the 64-bit architecture specific INF file entries
+;* required to install a driver as a 64-bit compatible driver.
+;*
+;******************************************************************************
+[SourceDisksFiles.amd64]
+nvme.sys = 1,,,
+
+[COMM.NTamd64]
+%COMMNvme.DeviceDesc% = nvme_inst, PCI\CC_010802
+%COMMNvme.DeviceDesc% = nvme_inst, PCI\CC_018000
+%COMMNvme.DeviceDesc% = nvme_inst, PCI\CC_010400
+
+
+[nvme_inst.NTamd64]
+CopyFiles=@nvme.sys
+
+[nvme_inst.NTamd64.HW]
+AddReg = msi_addreg
+
+[nvme_inst.NTamd64.Services]
+AddService = nvme, 0x00000002 , nvme_Service_Inst, nvme_EventLog_Inst
+
+[Strings]
+;
+; Localizable Strings
+;
+diskId1 = "NVME Installation Disk"
+CommNvme.DeviceDesc = "SMI NVM Express Controller"
+ProviderName = "SiliconMotion"
+
+;
+; Non-Localizable Strings
+;
+
+REG_EXPAND_SZ  = 0x00020000
+REG_DWORD      = 0x00010001
+SERVICE_KERNEL_DRIVER  = 1
+SERVICE_BOOT_START     = 0
+SERVICE_ERROR_NORMAL   = 1

@@ -1,0 +1,11 @@
+ERROR 2022-04-26 17:27:47,676 - Error Message from run_memory
+Traceback (most recent call last):
+  File "d:\DEPT\intel_smoke_test_ui\test_plan_ui.py", line 326, in run_memory
+    r = subprocess.Popen(["call", path+"\\"+next_file+".bat"], stdout=subprocess.PIPE)
+  File "c:\users\jerry.ku\appdata\local\programs\python\python37\lib\subprocess.py", line 800, in __init__
+    restore_signals, start_new_session)
+  File "c:\users\jerry.ku\appdata\local\programs\python\python37\lib\subprocess.py", line 1207, in _execute_child
+    startupinfo)
+  File "c:\Users\Jerry.ku\.vscode\extensions\ms-python.python-2022.4.1\pythonFiles\lib\python\debugpy\_vendored\pydevd\_pydev_bundle\pydev_monkey.py", line 850, in new_CreateProcess
+    return getattr(_subprocess, original_name)(app_name, cmd_line, *args)
+FileNotFoundError: [WinError 2] 系統找不到指定的檔案。

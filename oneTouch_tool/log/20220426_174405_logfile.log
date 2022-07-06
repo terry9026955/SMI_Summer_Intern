@@ -1,0 +1,7 @@
+ERROR 2022-04-26 17:44:05,521 - Error Message from run_memory
+Traceback (most recent call last):
+  File "d:\DEPT\intel_smoke_test_ui\test_plan_ui.py", line 313, in run_memory
+    filelist = config['%General']
+  File "c:\users\jerry.ku\appdata\local\programs\python\python37\lib\configparser.py", line 958, in __getitem__
+    raise KeyError(key)
+KeyError: '%General'
